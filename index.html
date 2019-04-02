@@ -7,7 +7,7 @@
   <meta name="author" content="colevanderswands">
 
 
-  <!-- <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <link href="./guesses-history/modal.css" rel="stylesheet" />
   <script src="./guesses-history/scripts.js"></script>
   <script src="./guesses-history/global-vars.js"></script>
@@ -21,14 +21,16 @@
   <div id="controls"></div>
 
   <br><br>
-  run it: <button onclick="open_in_pytut();">in python tutor</button> <button onclick="copy_it(); alert('copied snippet. open the console, paste & hit enter')">in console</button> <br>
-  edit in: <button onclick="open_in('blockit');">block it</button> <Br>
-  study it with: <button onclick="open_in('parsonizer');">parsonizer</button> 
-  <button onclick="open_in('linter');">linter</button> 
-  <button onclick="open_in('flowviz');">flow viz</button> 
-  <br>           
-  <button id="gen-perma" onclick="gen_permalink();">generate permalink:</button>
-  <input id="display-perma"></input><br>
+  <div>
+    run it: <button onclick="open_in_pytut();">in python tutor</button> <button onclick="copy_it();">in console</button> <br>
+    edit in: <button onclick="open_in('blockit');">block it</button> <Br>
+    study it with: <button onclick="open_in('parsonizer');">parsonizer</button> 
+    <button onclick="open_in('linter');">linter</button> 
+    <button onclick="open_in('flowviz');">flow viz</button> 
+    <br>           
+    <button id="gen-perma" onclick="gen_permalink();">generate permalink:</button>
+    <input id="display-perma"></input><br>
+  </div>
 
   <br/>
   <hr>
@@ -43,9 +45,9 @@
   <div id="guesses-history" style="display:none; overflow-y: hidden;">
     <div style="padding-right: 5%; padding-left: 5%; padding-bottom: 5%; overflow-y: hidden;">
       <div>
-        <pre id="the-answer" class="prettyprint">
+        <div id="the-answer" class="prettyprint">
 // no challenge loaded
-        </pre>  
+        </div>  
       </div>
       <div >
         <div id="the-guesses" style="height: 75vh; width: 100vh; overflow-y: auto">
@@ -71,19 +73,15 @@
 
   <script src="./ace/ace.js" type="text/javascript" charset="utf-8"></script>
 
-  <script src="./spotting/str-to-arr.js"></script>
   <script src="./spotting/solution-space.js"></script>
   <script src="./spotting/feedback.js"></script>
   <script src="./spotting/generate-challenge.js"></script>
   <script src="./spotting/handlers.js"></script>
   <script src="./spotting/modes.js"></script>
 
-  <script src="./intertwining/copy-to-clipboard.js"></script>
-  <script src="./intertwining/open-in-pytut.js"></script>
-  <script src="./intertwining/open-in.js"></script>
-  <script src="./intertwining/permalink-button.js"></script>
-  <script src="./intertwining/permalinking.js"></script>
-  <script src="./intertwining/query-maps.js"></script>
+  <script src="./linking/ctr-c.js"></script>
+  <script src="./linking/open-in-pytut.js"></script>
+  <script src="./linking/permalinking.js"></script>
 
   <script>
 
@@ -101,20 +99,17 @@
 
 
       var snippet;
-      var snippet_embed;
       var query = read_snippet_query();
       if (query) {
-        snippet = decode_query(query);
-        snippet_embed = embed_snippet(snippet);
+        snippet = query;
       } else {
         snippet = "var x = 0;\nif (x) {\n\tconsole.log(x);\n}";
-        snippet_embed = embed_snippet(snippet);
       };
 
-      var challenge = snippet;
-      var challenge_embed = generate_challenge(snippet_embed, 50); 
+      var challenge = generate_challenge(embed_snippet(snippet), 50); 
 
       editor.setValue(snippet);
+      init_modal(snippet);
   </script>
 
 </body>

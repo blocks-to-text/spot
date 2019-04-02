@@ -1,18 +1,10 @@
-
-// https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
-
-
 function copy_it() {
-  var code;
-  if (mode === "change") {
-    code = editor.getValue();
-  } else {
-    code = snippet;
-  };
+  var code = snippet;
   copy_to_clipboard(code); 
-
+  alert("copied snippet. open the console, paste & hit enter");
 };
 
+// https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
 function copy_to_clipboard(text) {
   if (!navigator.clipboard) {
     fallbackCopyTextToClipboard(text);

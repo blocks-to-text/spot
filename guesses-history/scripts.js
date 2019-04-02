@@ -1,6 +1,14 @@
 function init_modal(new_challenge) {
+
+  var pre = document.createElement('pre');
+  pre.className = "prettyprint prettyprinted";
+  pre.innerHTML = PR.prettyPrintOne(snippet, 'js', true);
+  pre.style.width = "75%";
   var the_answer = document.getElementById("the-answer");
-  the_answer.innerHTML = snippet;
+  while (the_answer.firstChild) {
+    the_answer.removeChild(the_answer.firstChild);
+  };
+  the_answer.appendChild(pre);
 
   var the_guesses = document.getElementById("the-guesses");
   while (the_guesses.firstChild) {
@@ -31,11 +39,15 @@ function update_modal() {
     next_message.appendChild(next_font);
 
     var next_guess = guesses[i].guess;
+    var pre = document.createElement('pre');
+    pre.className = "prettyprint prettyprinted";
+    pre.innerHTML = PR.prettyPrintOne(next_guess, 'js', true);
+    pre.style.width = "75%";
 
     var next_div = document.createElement("div");
     next_div.className = "sortable-code";
     next_div.appendChild(next_message);
-    next_div.appendChild(next_guess);
+    next_div.appendChild(pre);
 
     the_guesses.appendChild(next_div);
   };
@@ -45,42 +57,10 @@ function update_modal() {
 // could be done smoother now with access to parsons_instance?
 function save_guess() {
 
-  var ul_guess = document.getElementById("ul-sortable");
-  var copy_guess = ul_guess.cloneNode(true);
-  copy_guess.style = "list-style-type: none;";
+  var guess = editor.getValue();
 
-  var is_correct = parsons_instance.grader.grade().success;
+  var is_correct = snippet === guess;
 
-  guesses.push({guess: copy_guess, success: is_correct});
+  guesses.push({guess: guess, success: is_correct});
 
-/*
-  var indentations = [];
-  for (var i = 0; i < ul_guess.children.length; i++) {
-    var raw_margin = ul_guess.children[i].style.cssText;
-    var margin_num = raw_margin.slice(13, raw_margin.length-3);
-    var num_tabs = margin_num / 50;
-    var tabs = "";
-    while (num_tabs !== 0) {
-      tabs += '\t';
-      num_tabs--;
-    };
-    indentations.push(tabs);
-  };
-
-  var lines = [];
-  for (var i = 0; i < ul_guess.children.length; i++) {
-    var code_line = "";  
-    for (var j = 0; j < ul_guess.children[i].length; j++) {
-      code_line += ul_guess.children[i].children[j]
-    };
-    lines.push(code_line);
-  };
-
-  var indented_lines = [];
-  for (var i = 0; i < lines.length; i++) {
-    indented_lines.push(indentations[i] + lines[i]);
-  };
-  
-  var guess = indented_lines.join("\n");
-*/
 };
