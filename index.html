@@ -99,12 +99,16 @@
       spot_mode();
       var mode = "spot";
 
-      var snippet = "var x = 0;\nif (x) {\n\tconsole.log(x);\n}";
-      var snippet_embed = embed_snippet(snippet);
 
+      var snippet;
+      var snippet_embed;
       var query = read_snippet_query();
       if (query) {
         snippet = decode_query(query);
+        snippet_embed = embed_snippet(snippet);
+      } else {
+        snippet = "var x = 0;\nif (x) {\n\tconsole.log(x);\n}";
+        snippet_embed = embed_snippet(snippet);
       };
 
       var challenge = snippet;
