@@ -33,7 +33,7 @@ function gen_permalink() {
   } else {
     code = snippet;
   };
-  var url = generate_permalink(code, encode_query, 'parsonizer'); 
+  var url = generate_permalink(code, encode_query, 'spot'); 
   var perma_display = document.getElementById("display-perma");
   perma_display.value = url;
   copy_to_clipboard(url); 
